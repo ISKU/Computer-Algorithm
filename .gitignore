@@ -1,0 +1,10 @@
+# Directory
+.metadata
+.recommenders
+.settings
+bin
+RemoteSystemsTempFiles
+
+# Logs
+.classpath
+.project
