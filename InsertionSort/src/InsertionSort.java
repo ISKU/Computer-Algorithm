@@ -7,9 +7,7 @@ import java.util.Arrays;
 
 public class InsertionSort {
 	public static void main(String... args) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader("data02.txt"));
-		int[] data = initData(reader.readLine().split(","));
-		reader.close();
+		int[] data = initData(readArray());
 
 		printArray(data); // print before sorting
 
@@ -24,21 +22,21 @@ public class InsertionSort {
 	}
 
 	private static void insertionSort(int[] array) {
-		for (int j = 1; j < array.length; j++) {
-			int key = array[j];
-			int i = j - 1;
+		for (int count = 1; count < array.length; count++) {
+			int key = array[count];
+			int index = count - 1;
 
-			while (i >= 0 && array[i] > key)
-				array[i + 1] = array[i--];
-			array[i + 1] = key;
+			while (index >= 0 && array[index] > key)
+				array[index + 1] = array[index--];
+			array[index + 1] = key;
 		}
 	}
 
-	private static int[] initData(String[] data) {
-		int integerDataArray[] = new int[data.length];
-		for (int index = 0; index < data.length; index++)
-			integerDataArray[index] = Integer.parseInt(data[index]);
-		return integerDataArray;
+	private static String[] readArray() throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader("data02.txt"));
+		String[] readData = reader.readLine().split(",");
+		reader.close();
+		return readData;
 	}
 
 	private static void writeArray(int[] array) throws IOException {
@@ -47,6 +45,13 @@ public class InsertionSort {
 		for (int index = 1; index < array.length; index++)
 			writer.write("," + array[index]);
 		writer.close();
+	}
+
+	private static int[] initData(String[] data) {
+		int integerDataArray[] = new int[data.length];
+		for (int index = 0; index < data.length; index++)
+			integerDataArray[index] = Integer.parseInt(data[index]);
+		return integerDataArray;
 	}
 
 	private static void printArray(int[] array) {
