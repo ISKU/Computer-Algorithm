@@ -3,19 +3,14 @@ import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class InsertionSortWithBinarySearch {
-	public static void main(String[] args) throws IOException {
+	public static void main(String... args) throws IOException {
 		int[] data = initData(readArray());
-
-		printArray(data); // print before sorting
-
+		
 		long startTime = System.nanoTime();
 		insertionSortWithBinarySearch(data); // exercise binary-insertion sort
 		long endTime = System.nanoTime();
-
-		printArray(data); // print after sorting
 
 		writeArray(data); // output file
 		System.out.println("Execution Time: " + (endTime - startTime));
@@ -59,6 +54,8 @@ public class InsertionSortWithBinarySearch {
 
 	private static String[] readArray() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader("data02.txt"));
+		//BufferedReader reader = new BufferedReader(new FileReader("hw02_10man.txt"));
+		//BufferedReader reader = new BufferedReader(new FileReader("hw02_100man.txt"));		
 		String[] readData = reader.readLine().split(",");
 		reader.close();
 		return readData;
@@ -70,9 +67,5 @@ public class InsertionSortWithBinarySearch {
 		for (int index = 1; index < array.length; index++)
 			writer.write("," + array[index]);
 		writer.close();
-	}
-
-	private static void printArray(int[] array) {
-		System.out.println(Arrays.toString(array));
 	}
 }
