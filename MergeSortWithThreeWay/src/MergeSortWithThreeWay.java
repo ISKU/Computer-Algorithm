@@ -1,4 +1,4 @@
-import java.io.BufferedReader;
+﻿import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -6,6 +6,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+/**
+ * 알고리즘 00반
+ * 201201356 김민호
+ * 
+ * @author Kim Min-Ho
+ *
+ */
 public class MergeSortWithThreeWay {
 
 	private static int mergeCount;
@@ -43,7 +50,7 @@ public class MergeSortWithThreeWay {
 			merge(array, tempArray, leftSideStart, centerSideStart, rightSideStart, rightSideEnd);
 		}
 	}
-
+	
 	private static void merge(int[] array, int[] tempArray, int indexOfLeft, int indexOfCenter, int indexOfRight, int indexOfEnd) {
 		int indexOfMaxLeft = indexOfCenter - 1;
 		int indexOfMaxCenter = indexOfRight - 1;
@@ -94,13 +101,13 @@ public class MergeSortWithThreeWay {
 
 		mergeCount++;
 	}
-
+	
 	private static int[] readArrayAndInitData() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader("data02.txt"));
-		// BufferedReader reader = new BufferedReader(new FileReader("hw02_10man.txt"));
-		// BufferedReader reader = new BufferedReader(new FileReader("hw02_100man.txt"));
-		// BufferedReader reader = new BufferedReader(new FileReader("hw02_1000man.txt"));
-		// BufferedReader reader = new BufferedReader(new FileReader("hw02_uk.txt"));
+		//BufferedReader reader = new BufferedReader(new FileReader("hw02_10man.txt"));
+		//BufferedReader reader = new BufferedReader(new FileReader("hw02_100man.txt"));
+		//BufferedReader reader = new BufferedReader(new FileReader("hw02_1000man.txt"));
+		//BufferedReader reader = new BufferedReader(new FileReader("hw02_uk.txt"));
 		StringTokenizer readData = new StringTokenizer(reader.readLine());
 		ArrayList<Integer> integerData = new ArrayList<Integer>(100000000);
 		reader.close();
@@ -111,6 +118,7 @@ public class MergeSortWithThreeWay {
 		int[] integerDataArray = new int[integerData.size()];
 		for (int index = 0, size = integerData.size(); index < size; index++)
 			integerDataArray[index] = integerData.get(index);
+
 		return integerDataArray;
 	}
 

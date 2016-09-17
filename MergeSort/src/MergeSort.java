@@ -1,4 +1,4 @@
-import java.io.BufferedReader;
+﻿import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -6,6 +6,13 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 import java.util.ArrayList;
 
+/**
+ * 알고리즘 00반
+ * 201201356 김민호
+ * 
+ * @author Kim Min-Ho
+ *
+ */
 public class MergeSort {
 
 	private static int mergeCount;
@@ -60,10 +67,10 @@ public class MergeSort {
 
 	private static int[] readArrayAndInitData() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader("data02.txt"));
-		// BufferedReader reader = new BufferedReader(new FileReader("hw02_10man.txt"));
-		// BufferedReader reader = new BufferedReader(new FileReader("hw02_100man.txt"));
-		// BufferedReader reader = new BufferedReader(new FileReader("hw02_1000man.txt"));
-		// BufferedReader reader = new BufferedReader(new FileReader("hw02_uk.txt"));
+		//BufferedReader reader = new BufferedReader(new FileReader("hw02_10man.txt"));
+		//BufferedReader reader = new BufferedReader(new FileReader("hw02_100man.txt"));
+		//BufferedReader reader = new BufferedReader(new FileReader("hw02_1000man.txt"));
+		//BufferedReader reader = new BufferedReader(new FileReader("hw02_uk.txt"));
 		StringTokenizer readData = new StringTokenizer(reader.readLine());
 		ArrayList<Integer> integerData = new ArrayList<Integer>(100000000);
 		reader.close();

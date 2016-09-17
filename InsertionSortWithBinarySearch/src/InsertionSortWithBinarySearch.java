@@ -1,9 +1,16 @@
-import java.io.BufferedReader;
+﻿import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * 알고리즘 00반
+ * 201201356 김민호
+ * 
+ * @author Kim Min-Ho
+ *
+ */
 public class InsertionSortWithBinarySearch {
 	public static void main(String... args) throws IOException {
 		int[] data = initData(readArray());
