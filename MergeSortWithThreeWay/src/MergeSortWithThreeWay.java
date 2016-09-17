@@ -25,16 +25,23 @@ public class MergeSortWithThreeWay {
 
 	private static void threeWayMergeSort(int[] array, int[] tempArray, int leftSideStart, int rightSideEnd) {
 		int currentArraySize = rightSideEnd - leftSideStart + 1;
-		int centerSideStart = (leftSideStart + rightSideEnd + 1) / 3;
-		int rightSideStart = (leftSideStart + rightSideEnd + 1) / 3 * 2;
+		int centerSideStart = leftSideStart + (currentArraySize / 3);
+		int rightSideStart = leftSideStart + (currentArraySize / 3 * 2);
 
-		if (currentArraySize <= 1)
+		if (currentArraySize <= 1) {
 			return;
-
-		threeWayMergeSort(array, tempArray, leftSideStart, centerSideStart - 1);
-		threeWayMergeSort(array, tempArray, centerSideStart, rightSideStart - 1);
-		threeWayMergeSort(array, tempArray, rightSideStart, rightSideEnd);
-		merge(array, tempArray, leftSideStart, centerSideStart, rightSideStart, rightSideEnd);
+		} else if (currentArraySize <= 2) {
+			if (array[leftSideStart] > array[leftSideStart + 1]) {
+				int tempValue = array[leftSideStart];
+				array[leftSideStart] = array[leftSideStart + 1];
+				array[leftSideStart + 1] = tempValue;
+			}
+		} else {
+			threeWayMergeSort(array, tempArray, leftSideStart, centerSideStart - 1);
+			threeWayMergeSort(array, tempArray, centerSideStart, rightSideStart - 1);
+			threeWayMergeSort(array, tempArray, rightSideStart, rightSideEnd);
+			merge(array, tempArray, leftSideStart, centerSideStart, rightSideStart, rightSideEnd);
+		}
 	}
 
 	private static void merge(int[] array, int[] tempArray, int indexOfLeft, int indexOfCenter, int indexOfRight, int indexOfEnd) {
@@ -44,16 +51,12 @@ public class MergeSortWithThreeWay {
 		int tempArrayIndex = indexOfLeft;
 
 		while (indexOfLeft <= indexOfMaxLeft && indexOfCenter <= indexOfMaxCenter && indexOfRight <= indexOfEnd) {
-			if (array[indexOfLeft] < array[indexOfCenter]) {
-				if (array[indexOfLeft] < array[indexOfRight])
-					tempArray[tempArrayIndex++] = array[indexOfLeft++];
-			} else if (array[indexOfCenter] < array[indexOfRight]) {
-				if (array[indexOfCenter] < array[indexOfLeft])
-					tempArray[tempArrayIndex++] = array[indexOfCenter++];
-			} else if (array[indexOfRight] < array[indexOfLeft]) {
-				if (array[indexOfRight] < array[indexOfCenter])
-					tempArray[tempArrayIndex++] = array[indexOfRight++];
-			}
+			if (array[indexOfLeft] < array[indexOfCenter] && array[indexOfLeft] < array[indexOfRight])
+				tempArray[tempArrayIndex++] = array[indexOfLeft++];
+			else if (array[indexOfCenter] < array[indexOfLeft] && array[indexOfCenter] < array[indexOfRight])
+				tempArray[tempArrayIndex++] = array[indexOfCenter++];
+			else if (array[indexOfRight] < array[indexOfLeft] && array[indexOfRight] < array[indexOfCenter])
+				tempArray[tempArrayIndex++] = array[indexOfRight++];
 		}
 
 		if (indexOfLeft > indexOfMaxLeft) {
@@ -94,10 +97,10 @@ public class MergeSortWithThreeWay {
 
 	private static int[] readArrayAndInitData() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader("data02.txt"));
-		//BufferedReader reader = new BufferedReader(new FileReader("hw02_10man.txt"));
-		//BufferedReader reader = new BufferedReader(new FileReader("hw02_100man.txt"));
-		//BufferedReader reader = new BufferedReader(new FileReader("hw02_1000man.txt"));
-		//BufferedReader reader = new BufferedReader(new FileReader("hw02_uk.txt"));
+		// BufferedReader reader = new BufferedReader(new FileReader("hw02_10man.txt"));
+		// BufferedReader reader = new BufferedReader(new FileReader("hw02_100man.txt"));
+		// BufferedReader reader = new BufferedReader(new FileReader("hw02_1000man.txt"));
+		// BufferedReader reader = new BufferedReader(new FileReader("hw02_uk.txt"));
 		StringTokenizer readData = new StringTokenizer(reader.readLine());
 		ArrayList<Integer> integerData = new ArrayList<Integer>(100000000);
 		reader.close();
