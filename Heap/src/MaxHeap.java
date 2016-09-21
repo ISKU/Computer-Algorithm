@@ -13,8 +13,8 @@ public class MaxHeap {
 		this.treeSize = array.length;
 		this.tree = new int[treeSize];
 		System.arraycopy(array, 0, tree, 0, treeSize);
-		
-		for (int index = treeSize / 2 - 1; index > 0; index--)
+
+		for (int index = treeSize / 2 - 1; index >= 0; index--)
 			heapify(index);
 	}
 
@@ -31,11 +31,22 @@ public class MaxHeap {
 			heapify(largestValue);
 		}
 	}
-	
+
+	public void sort() {
+		int tempTreeSize = treeSize;
+
+		while (treeSize-- > 0) {
+			elementSwap(0, treeSize);
+			heapify(0);
+		}
+		
+		treeSize = tempTreeSize;
+	}
+
 	public int getSize() {
 		return this.treeSize;
 	}
-	
+
 	private void elementSwap(int firstIndex, int secondIndex) {
 		int tempValue = tree[firstIndex];
 		tree[firstIndex] = tree[secondIndex];
