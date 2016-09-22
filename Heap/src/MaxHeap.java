@@ -1,17 +1,15 @@
-import java.util.Arrays;
-
 public class MaxHeap {
 
-	private int[] tree;
+	private Node[] tree;
 	private int treeSize;
 
 	public MaxHeap() {
 		// empty constructor
 	}
 
-	public void buildMaxHeap(int[] array) {
+	public void buildMaxHeap(Node[] array) {
 		this.treeSize = array.length;
-		this.tree = new int[treeSize];
+		this.tree = new Node[treeSize];
 		System.arraycopy(array, 0, tree, 0, treeSize);
 
 		for (int index = treeSize / 2 - 1; index >= 0; index--)
@@ -23,8 +21,8 @@ public class MaxHeap {
 		int right = right(parent);
 		int largestValue;
 
-		largestValue = (left < treeSize && tree[left] > tree[parent]) ? left : parent;
-		largestValue = (right < treeSize && tree[right] > tree[largestValue]) ? right : largestValue;
+		largestValue = (left < treeSize && tree[left].value > tree[parent].value) ? left : parent;
+		largestValue = (right < treeSize && tree[right].value > tree[largestValue].value) ? right : largestValue;
 
 		if (largestValue != parent) {
 			elementSwap(largestValue, parent);
@@ -48,9 +46,9 @@ public class MaxHeap {
 	}
 
 	private void elementSwap(int firstIndex, int secondIndex) {
-		int tempValue = tree[firstIndex];
+		Node tempNode = tree[firstIndex];
 		tree[firstIndex] = tree[secondIndex];
-		tree[secondIndex] = tempValue;
+		tree[secondIndex] = tempNode;
 	}
 
 	private int left(int parent) {
@@ -63,6 +61,9 @@ public class MaxHeap {
 
 	@Override
 	public String toString() {
-		return Arrays.toString(tree);
+		StringBuilder data = new StringBuilder();
+		for (int index = 0; index < treeSize; index++)
+			data.append(tree[index].value + " " + tree[index].subject + "\n");
+		return data.toString();
 	}
 }
