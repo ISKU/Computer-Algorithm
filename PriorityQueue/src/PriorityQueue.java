@@ -7,7 +7,7 @@ public class PriorityQueue {
 		buildMaxHeap(array);
 	}
 
-	public void buildMaxHeap(Node[] array) {
+	private void buildMaxHeap(Node[] array) {
 		this.treeSize = array.length;
 		this.tree = new Node[treeSize];
 		System.arraycopy(array, 0, tree, 0, treeSize);
@@ -16,7 +16,7 @@ public class PriorityQueue {
 			heapify(index);
 	}
 
-	public void heapify(int parent) {
+	private void heapify(int parent) {
 		int left = left(parent);
 		int right = right(parent);
 		int largestValue;
@@ -45,7 +45,6 @@ public class PriorityQueue {
 		resize();
 		int currentIndex = treeSize - 1;
 		int parent = parent(currentIndex);
-
 		tree[currentIndex] = element;
 
 		while (parent >= 0 && tree[parent].value < element.value) {
@@ -63,11 +62,22 @@ public class PriorityQueue {
 		return maxNode;
 	}
 
-	public void increase_key(int index, int increase) {
-
+	public void increaseKey(int index, int key) { 
+		int currentIndex = index - 1;
+		int parent = parent(index - 1);
+		tree[index - 1].value = key;
+		
+		while (parent >= 0 && tree[parent].value < tree[currentIndex].value) {
+			elementSwap(parent, currentIndex);
+			currentIndex = parent;
+			parent = parent(currentIndex);
+		}
 	}
 
-	public void delete(int element) {
+	public void delete(int index) {
+		elementSwap(index - 1, treeSize - 1);
+		treeSize--;
+		heapify(index - 1);
 	}
 
 	public Node getMax() {

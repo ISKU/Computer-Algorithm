@@ -36,10 +36,14 @@ public class Main {
 				System.out.print("수정할 노드의 index: ");
 				int index = input.nextInt();
 				System.out.print("수정할 노드의 value: ");
-				pQueue.increase_key(index, input.nextInt());
+				pQueue.increaseKey(index, input.nextInt());
 				header = Sentence.COMPLETE;
 				break;
 			case 5:
+				System.out.print("삭제할 노드의 Index: ");
+				pQueue.delete(input.nextInt());
+				header = Sentence.COMPLETE;
+				break;
 			case 6:
 				System.exit(0);
 			default:
