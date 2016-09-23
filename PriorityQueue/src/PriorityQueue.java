@@ -48,10 +48,10 @@ public class PriorityQueue {
 		if (treeSize == tree.length)
 			resize();
 		
+		treeSize++;
 		int currentIndex = treeSize - 1;
 		int parent = parent(currentIndex);
 		tree[currentIndex] = element;
-		treeSize++;
 
 		while (parent >= 0 && tree[parent].value < element.value) {
 			elementSwap(parent, currentIndex);
@@ -210,7 +210,7 @@ public class PriorityQueue {
 	 * @return Tree에서 child의 parent index를 반환
 	 */
 	private int parent(int child) {
-		return child / 2 - 1;
+		return (child - 1) / 2;
 	}
 
 	/**
