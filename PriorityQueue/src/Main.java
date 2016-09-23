@@ -33,14 +33,14 @@ public class Main {
 		viewScreen(Sentence.GUIDE);
 
 		while (true) {
-			String header = null;
+			String header = Sentence.GUIDE;
 
-			switch (input.nextInt()) {
+			switch (Integer.parseInt(input.nextLine())) {
 			case 1:
 				System.out.print("신규 작업명: ");
-				String subject = input.next();
-				System.out.print("우선순위(0~999)");
-				pQueue.insert(new Node(input.nextInt(), subject));
+				String subject = input.nextLine();
+				System.out.print("우선순위(0~999): ");
+				pQueue.insert(new Node(Integer.parseInt(input.nextLine()), subject));
 				header = Sentence.ADD;
 				break;
 			case 2:
@@ -53,20 +53,20 @@ public class Main {
 				break;
 			case 4:
 				System.out.print("수정할 노드의 index: ");
-				int index = input.nextInt();
+				int index = Integer.parseInt(input.nextLine());
 				System.out.print("수정할 노드의 value: ");
-				pQueue.increaseKey(index, input.nextInt());
+				pQueue.increaseKey(index, Integer.parseInt(input.nextLine()));
 				header = Sentence.COMPLETE;
 				break;
 			case 5:
 				System.out.print("삭제할 노드의 Index: ");
-				pQueue.delete(input.nextInt());
+				pQueue.delete(Integer.parseInt(input.nextLine()));
 				header = Sentence.COMPLETE;
 				break;
 			case 6:
 				System.exit(0);
 			default:
-				continue;
+				break;
 			}
 
 			clearScreen();
