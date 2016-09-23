@@ -4,13 +4,32 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * PriorityQueue Test Main Class
+ * 
+ * 알고리즘 00반 201201356 김민호
+ * @author Kim Min-Ho
+ */
 public class Main {
 
 	private static PriorityQueue pQueue;
 
+	/**
+	 * 사용자는 아래 번호의 입력으로 PriorityQueue의  각 기능들을 테스트해 볼 수 있다.
+	 * 1. 작업추가
+	 * 2. 최대값
+	 * 3. 최대 우선순위 작업 처리
+	 * 4. 원소 키 값 증가
+	 * 5. 작업 제거
+	 * 6. 종료
+	 *
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String... args) throws IOException {
 		Scanner input = new Scanner(System.in);
 		pQueue = new PriorityQueue(readData());
+		clearScreen();
 		viewScreen(Sentence.GUIDE);
 
 		while (true) {
@@ -22,14 +41,14 @@ public class Main {
 				String subject = input.next();
 				System.out.print("우선순위(0~999)");
 				pQueue.insert(new Node(input.nextInt(), subject));
-				header = Sentence.GUIDE;
+				header = Sentence.ADD;
 				break;
 			case 2:
-				Node maxNode = pQueue.getMax();
+				Node maxNode = pQueue.max();
 				header = "**** MAX: " + maxNode.value + ", " + maxNode.subject + " ****\n\n";
 				break;
 			case 3:
-				pQueue.extract_max();
+				pQueue.extractMax();
 				header = Sentence.COMPLETE;
 				break;
 			case 4:
@@ -55,6 +74,12 @@ public class Main {
 		}
 	}
 
+	/**
+	 * 현재 PriorityQueue의 원소들을 출력하는 메소드
+	 * 사용자는 PriorityQueue의 작업 수행을 확인하는 용도로 사용한다.
+	 * 
+	 * @param header 사용자가 작업한 내용을 설명하는 문장
+	 */
 	private static void viewScreen(String header) {
 		System.out.print(header);
 		System.out.print(pQueue.toString());
@@ -63,11 +88,22 @@ public class Main {
 		System.out.print(Sentence.LINE);
 	}
 
+	/**
+	 * 화면에 출력된 모든 내용을 지우는 메소드
+	 */
 	private static void clearScreen() {
 		for (int i = 0; i < 80; i++)
 			System.out.println("");
 	}
 
+	/**
+	 * 파일에서 PriorityQueue에 사용 될 원소들의 배열을 가져오는 메소드
+	 * 각 원소는 Node Class로 정의한 배열을 사용하고 각 원소의 값은 아래와 같다.
+	 * Node.value = Priority, Node.subject = 과목명
+	 * 
+	 * @return 파일로 부터 읽어들인 원소들을 배열로 저장하여 반환
+	 * @throws IOException
+	 */
 	private static Node[] readData() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader("data03.txt"));
 		String line = null;
