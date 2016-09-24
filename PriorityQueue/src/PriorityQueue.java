@@ -85,7 +85,7 @@ public class PriorityQueue {
 	/**
 	 * PrioirtyQueue에 있는 원소의 값을 증가시킨다.
 	 * Tree에 해당 index의 value를 key로 변경 한 후,
-	 * 변경되는 key의 값은 해당 index의 부모 노드의 값보다 클 수 없기 때문에
+	 * 변경되는 key의 값은 해당 현재 원소의 key 값 보다 작아질 수 없기 때문에
 	 * 해당 index에서부터 root까지 Bottom-Up heapify를 수행한다.
 	 * 
 	 * @param index Tree의 사용자가 선택한 임의 노드의 index
@@ -93,13 +93,18 @@ public class PriorityQueue {
 	 */
 	public void increaseKey(int index, int key) {
 		int currentIndex = index - 1;
-		int parent = parent(index - 1);
-		tree[index - 1].value = key;
+		int parent = parent(currentIndex);
 
-		while (parent >= 0 && tree[parent].value < tree[currentIndex].value) {
-			elementSwap(parent, currentIndex);
-			currentIndex = parent;
-			parent = parent(currentIndex);
+		if (tree[currentIndex].value < key) {
+			tree[currentIndex].value = key;
+			while (parent >= 0 && tree[parent].value < tree[currentIndex].value) {
+				elementSwap(parent, currentIndex);
+				currentIndex = parent;
+				parent = parent(currentIndex);
+			}
+		} else if (tree[currentIndex].value > key) {
+			tree[currentIndex].value = key;
+			heapify(currentIndex);
 		}
 	}
 
