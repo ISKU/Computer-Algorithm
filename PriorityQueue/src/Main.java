@@ -15,7 +15,7 @@ public class Main {
 	private static PriorityQueue pQueue;
 
 	/**
-	 * 사용자는 아래 번호의 입력으로 PriorityQueue의  각 기능들을 테스트해 볼 수 있다.
+	 * 사용자는 아래 번호의 입력으로 PriorityQueue의 각 기능들을 테스트해 볼 수 있다.
 	 * 1. 작업추가
 	 * 2. 최대값
 	 * 3. 최대 우선순위 작업 처리
@@ -44,24 +44,40 @@ public class Main {
 				header = Sentence.ADD;
 				break;
 			case 2:
-				Node maxNode = pQueue.max();
-				header = "**** MAX: " + maxNode.value + ", " + maxNode.subject + " ****\n\n";
+				if (pQueue.isEmpty())
+					header = Sentence.EMPTY;
+				else {
+					Node maxNode = pQueue.max();
+					header = "**** MAX: " + maxNode.value + ", " + maxNode.subject + " ****\n\n";
+				}
 				break;
 			case 3:
-				pQueue.extractMax();
-				header = Sentence.COMPLETE;
+				if (pQueue.isEmpty())
+					header = Sentence.EMPTY;
+				else {
+					pQueue.extractMax();
+					header = Sentence.COMPLETE;
+				}
 				break;
 			case 4:
-				System.out.print("수정할 노드의 index: ");
-				int index = Integer.parseInt(input.nextLine());
-				System.out.print("수정할 노드의 value: ");
-				pQueue.increaseKey(index, Integer.parseInt(input.nextLine()));
-				header = Sentence.COMPLETE;
+				if (pQueue.isEmpty())
+					header = Sentence.EMPTY;
+				else {
+					System.out.print("수정할 노드의 index: ");
+					int index = Integer.parseInt(input.nextLine());
+					System.out.print("수정할 노드의 value: ");
+					pQueue.increaseKey(index, Integer.parseInt(input.nextLine()));
+					header = Sentence.COMPLETE;
+				}
 				break;
 			case 5:
 				System.out.print("삭제할 노드의 Index: ");
-				pQueue.delete(Integer.parseInt(input.nextLine()));
-				header = Sentence.COMPLETE;
+				if (pQueue.isEmpty())
+					header = Sentence.EMPTY;
+				else {
+					pQueue.delete(Integer.parseInt(input.nextLine()));
+					header = Sentence.COMPLETE;
+				}
 				break;
 			case 6:
 				System.exit(0);

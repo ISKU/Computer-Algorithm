@@ -229,7 +229,7 @@ public class PriorityQueue {
 	public String toString() {
 		StringBuilder data = new StringBuilder();
 		for (int index = 0; index < treeSize; index++)
-			data.append(tree[index].value + ", " + tree[index].subject + "\n");
+			data.append((index + 1) + ".  " + tree[index].value + ", " + tree[index].subject + "\n");
 		return data.toString();
 	}
 }
