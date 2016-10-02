@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class QuickSort {
@@ -32,13 +33,15 @@ public class QuickSort {
 		int right = end;
 
 		while (left < right) {
-			while (array[left] < array[pivot] && left < right)
+			while (array[left] <= array[pivot] && left < right)
 				left++;
-			while (array[right] > array[pivot] && left < right)
+			while (array[right] >= array[pivot] && left < right)
 				right--;
 
-			if (left < right)
+			if (left < right) {
+				System.out.println(left + " " + right);
 				swap(array, left, right);
+			}
 		}
 
 		swap(array, pivot, right);
