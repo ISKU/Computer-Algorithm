@@ -21,37 +21,38 @@ public class QuickSort {
 
 	private static void quickSort(int[] array, int left, int right) {
 		if (left < right) {
-			int center = partition(array, left, right);
-			quickSort(array, left, center - 1);
-			quickSort(array, center + 1, right);
+			int indexOfPivot = partition(array, left, right);
+			quickSort(array, left, indexOfPivot - 1);
+			quickSort(array, indexOfPivot + 1, right);
 		}
 	}
 
 	private static int partition(int[] array, int start, int end) {
-		int pivot = start;
-		int left = start;
+		int pivot = array[start];
+		int left = start + 1;
 		int right = end;
 
-		while (left < right) {
-			while (array[left] <= array[pivot] && left < right)
+		while (left <= right) {
+			while (left <= end && array[left] <= pivot)
 				left++;
-			while (array[right] >= array[pivot] && left < right)
+			while (array[right] > pivot)
 				right--;
 
 			if (left < right) {
-				System.out.println(left + " " + right);
 				swap(array, left, right);
+				left++;
+				right--;
 			}
 		}
 
-		swap(array, pivot, right);
-		return left;
+		swap(array, start, right);
+		return right;
 	}
 
-	private static void swap(int[] array, int firstIndex, int secondIndex) {
-		int tempValue = array[firstIndex];
-		array[firstIndex] = array[secondIndex];
-		array[secondIndex] = tempValue;
+	private static void swap(int[] array, int leftIndex, int rightIndex) {
+		int tempValue = array[leftIndex];
+		array[leftIndex] = array[rightIndex];
+		array[rightIndex] = tempValue;
 	}
 
 	private static int[] readArrayAndInitData() throws IOException {
