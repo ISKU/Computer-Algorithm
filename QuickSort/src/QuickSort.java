@@ -1,12 +1,16 @@
-import java.io.BufferedReader;
+﻿import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.StringTokenizer;
+import java.util.ArrayList;
 
+/**
+ * Quick Sort Algorithm 
+ * 알고리즘 00반 201201356 김민호
+ * @author Kim Min-Ho
+ */
 public class QuickSort {
 	public static void main(String... args) throws IOException {
 		int[] data = readArrayAndInitData(); // input file
@@ -37,12 +41,8 @@ public class QuickSort {
 				left++;
 			while (array[right] > pivot)
 				right--;
-
-			if (left < right) {
-				swap(array, left, right);
-				left++;
-				right--;
-			}
+			if (left < right)
+				swap(array, left++, right--);
 		}
 
 		swap(array, start, right);
