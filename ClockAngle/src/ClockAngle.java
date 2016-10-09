@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * 시간을 입력 받아 시침과 분침 사이의 각도를 계산하는 프로그램 
+ * 시간을 입력 받아 시침과 분침 사이의 각도를 계산하는 프로그램
  * 알고리즘 00반 201201356 김민호
  * @author Kim Min-Ho
  */
@@ -26,9 +26,11 @@ public class ClockAngle {
 
 	private static double calculateAngle(double hour, double minute) {
 		double angle = (hour < minute) 
-				? angleOfMinute(minute) - angleOfHour(hour, minute)
-				: angleOfHour(hour, minute) - angleOfMinute(minute);
+				? Math.abs(angleOfMinute(minute) - angleOfHour(hour, minute))
+				: Math.abs(angleOfHour(hour, minute) - angleOfMinute(minute));
 
+		if (angle > 180)
+			angle = 180 - (angle - 180);
 		return Math.abs(angle);
 	}
 
