@@ -12,6 +12,7 @@ public class Floor {
 			System.out.print("N: ");
 			double n = input.nextDouble();
 			floorLog_2(n);
+			binaryFloorLog_2(n);
 		}
 	}
 
@@ -26,6 +27,21 @@ public class Floor {
 
 		System.out.println("=========== Linear");
 		System.out.println("Answer: " + e);
+		System.out.println("Count: " + count);
+	}
+
+	private static void binaryFloorLog_2(double n) {
+		long end = 1, k = 2, count = 0;
+		long start, mid;
+
+		while (k <= n) {
+			k *= k;
+			end *= 2;
+			count++;
+		}
+
+		System.out.println("=========== Binary");
+		System.out.println("Answer: " + end);
 		System.out.println("Count: " + count);
 	}
 
