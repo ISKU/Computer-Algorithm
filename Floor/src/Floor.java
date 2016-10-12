@@ -70,8 +70,4 @@ public class Floor {
 		System.out.println("Count: " + count);
 		System.out.println("==================");
 	}
-
-	private static double log_2(double n) {
-		return Math.log(n) / Math.log(2.0);
-	}
 }
