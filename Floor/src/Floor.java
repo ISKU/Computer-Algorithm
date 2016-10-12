@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * log_2(n)의 floor를 계산하는 프로그램
+ * log_2(n)의 floor를 계산하는 프로그램 
  * 알고리즘 00반 201201356 김민호
  * @author Kim Min-Ho
  */
@@ -25,42 +25,50 @@ public class Floor {
 			count++;
 		}
 
-		System.out.println("=========== Linear");
+		System.out.println("----------- Linear");
 		System.out.println("Answer: " + e);
 		System.out.println("Count: " + count);
 	}
 
 	private static void binaryFloorLog_2(long n) {
-		long end = 1, count = 0;
-		long k = 2, start = 0, mid = 0;
+		long[] arrayPower = new long[33];
+		long k = 2;
+		int e = 1;
+		int start = 0, mid = 0, count = 0;
+		arrayPower[0] = 1;
 
-		while (k <= n) {
+		while (k <= n && k != 0) {
+			arrayPower[e] = k;
 			k *= k;
-			end *= 2;
+			e *= 2;
 			count++;
 		}
 
-		start = end / 2;
-		mid = (start + end) / 2;
-		k /= Math.pow(2, mid - start);
+		start = e / 2;
+		mid = (start + e) / 2;
+		k = (k == 0) 
+			? arrayPower[32] * arrayPower[(mid - start)] 
+			: k / arrayPower[(mid - start)];
 
 		while (start < mid) {
 			if (k > n) {
-				end = mid;
-				mid = (start + end) / 2;
-				k /= (int) Math.pow(2, (end - mid));
-			} else {
+				e = mid;
+				mid = (start + e) / 2;
+				k /= arrayPower[e - mid];
+			} else if (k < n) {
 				start = mid;
-				mid = (start + end) / 2;
-				k *= (int) Math.pow(2, (mid - start));
-			}
+				mid = (start + e) / 2;
+				k *= arrayPower[mid - start];
+			} else
+				break;
 
 			count++;
 		}
 
-		System.out.println("=========== Binary");
+		System.out.println("----------- Binary");
 		System.out.println("Answer: " + mid);
 		System.out.println("Count: " + count);
+		System.out.println("==================");
 	}
 
 	private static double log_2(double n) {
