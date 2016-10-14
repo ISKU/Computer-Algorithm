@@ -46,15 +46,18 @@ public class Fibonacci {
 	private static BigInteger array(BigInteger nth) {
 		if (nth.equals(ZERO))
 			return ZERO;
+		if (nth.equals(ONE))
+			return ONE;
 
 		BigInteger first = ZERO;
 		BigInteger second = ONE;
 		BigInteger third;
 
-		while (nth.subtract(ONE).compareTo(ZERO) != -1) {
+		while (!nth.equals(TWO)) {
 			third = first.add(second);
 			first = second;
 			second = third;
+			nth = nth.subtract(ONE);
 		}
 
 		return first.add(second);
