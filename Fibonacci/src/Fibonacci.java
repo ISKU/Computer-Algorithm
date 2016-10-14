@@ -47,8 +47,29 @@ public class Fibonacci {
 
 	}
 
-	private static void squaring(BigInteger nth) {
+	private static BigInteger squaring(BigInteger nth) {
+		BigInteger[][] matrix = new BigInteger[][] { { ONE, ZERO }, { ZERO, ONE } };
+		BigInteger[][] matrixFibonacci = new BigInteger[][] { { ONE, ONE }, { ONE, ZERO } };
 
+		while (!nth.equals(ZERO)) {
+			if (nth.remainder(TWO).equals(ONE))
+				matrix = multiplication(matrix, matrixFibonacci);
+			matrixFibonacci = multiplication(matrixFibonacci, matrixFibonacci);
+			nth = nth.divide(TWO);
+		}
+
+		return matrix[0][1];
+	}
+
+	private static BigInteger[][] multiplication(BigInteger[][] A, BigInteger[][] B) {
+		BigInteger[][] newMatrix = new BigInteger[][] { { ZERO, ZERO }, { ZERO, ZERO } };
+
+		for (int i = 0; i < 2; i++)
+			for (int j = 0; j < 2; j++)
+				for (int k = 0; k < 2; k++)
+					newMatrix[i][j] = newMatrix[i][j].add(A[i][k].multiply(B[k][j]));
+
+		return newMatrix;
 	}
 
 	private static void exerciseRecursion(BigInteger nth) {
@@ -69,7 +90,16 @@ public class Fibonacci {
 	}
 
 	private static void exerciseSquaring(BigInteger nth) {
+		BigInteger n = ZERO;
 
+		while (n.compareTo(nth) != 1) {
+			double startTime = System.nanoTime();
+			BigInteger fibonacciNumber = squaring(n);
+			double endTime = System.nanoTime();
+
+			printNumber(n, fibonacciNumber, endTime - startTime);
+			n = n.add(ONE);
+		}
 	}
 
 	private static void printNumber(BigInteger nth, BigInteger fibonacciNumber, double time) {
