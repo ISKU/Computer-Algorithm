@@ -43,8 +43,21 @@ public class Fibonacci {
 		return recursion(nth.subtract(ONE)).add(recursion(nth.subtract(TWO)));
 	}
 
-	private static void array(BigInteger nth) {
+	private static BigInteger array(BigInteger nth) {
+		if (nth.equals(ZERO))
+			return ZERO;
 
+		BigInteger first = ZERO;
+		BigInteger second = ONE;
+		BigInteger third;
+
+		while (nth.subtract(ONE).compareTo(ZERO) != -1) {
+			third = first.add(second);
+			first = second;
+			second = third;
+		}
+
+		return first.add(second);
 	}
 
 	private static BigInteger squaring(BigInteger nth) {
@@ -86,7 +99,16 @@ public class Fibonacci {
 	}
 
 	private static void exerciseArray(BigInteger nth) {
+		BigInteger n = ZERO;
 
+		while (n.compareTo(nth) != 1) {
+			double startTime = System.nanoTime();
+			BigInteger fibonacciNumber = array(n);
+			double endTime = System.nanoTime();
+
+			printNumber(n, fibonacciNumber, endTime - startTime);
+			n = n.add(ONE);
+		}
 	}
 
 	private static void exerciseSquaring(BigInteger nth) {
