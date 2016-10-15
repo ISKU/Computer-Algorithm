@@ -11,6 +11,7 @@ public class Fibonacci {
 	private static final BigInteger ZERO = new BigInteger("0");
 	private static final BigInteger ONE = new BigInteger("1");
 	private static final BigInteger TWO = new BigInteger("2");
+	private static final BigInteger TEN = new BigInteger("10");
 	private static final String LINE = "--------------------------------------------------------\n";
 
 	public static void main(String... args) {
@@ -20,7 +21,6 @@ public class Fibonacci {
 		int selectWay = input.nextInt();
 		System.out.print("Find N-th Fibonacci Number: ");
 		BigInteger nth = new BigInteger(input.next());
-		System.out.print(LINE);
 
 		switch (selectWay) {
 		case 1:
@@ -35,6 +35,9 @@ public class Fibonacci {
 		default:
 			System.out.println("Invaild Input");
 		}
+
+		System.out.print(LINE);
+		input.close();
 	}
 
 	private static BigInteger recursion(BigInteger nth) {
@@ -128,6 +131,8 @@ public class Fibonacci {
 	}
 
 	private static void printNumber(BigInteger nth, BigInteger fibonacciNumber, double time) {
+		if (nth.remainder(TEN).equals(ZERO))
+			System.out.print(LINE);
 		System.out.printf("f<%2s> = %-25s \t %.9f sec\n", nth, fibonacciNumber, time * Math.pow(10, -9));
 	}
 
