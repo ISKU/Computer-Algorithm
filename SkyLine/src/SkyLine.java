@@ -13,6 +13,7 @@ import java.util.PriorityQueue;
 public class SkyLine {
 	public static void main(String... args) throws IOException {
 		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder output = new StringBuilder();
 		StringTokenizer parser = new StringTokenizer(input.readLine());
 		PriorityQueue<Building> pQueue = new PriorityQueue<Building>();
 
@@ -27,45 +28,44 @@ public class SkyLine {
 		Building first = pQueue.poll();
 		int high = -1 * first.height;
 		int last = first.right;
-		System.out.printf("%d,%d,", first.left, -1 * first.height);
+		output.append(first.left + "," + -1 * first.height + ",");
 
 		while (!pQueue.isEmpty()) {
 			Building building = pQueue.poll();
 			building.height *= -1;
-			
+
 			if (building.left > last) {
-				System.out.printf("%d,0,%d,%d,", last, building.left, building.height);
+				output.append(last + ",0" + building.left + "," + building.height + ",");
 				high = building.height;
 				last = building.right;
-			}
-			else if (building.left == last) {
+			} else if (building.left == last) {
 				if (building.height == high)
 					last = building.right;
 				else {
-					System.out.printf("%d,%d,", building.left, building.height);
+					output.append(building.left + "," + building.height + ",");
 					high = building.height;
 					last = building.right;
 				}
 			} else {
 				if (building.height > high) {
-					System.out.printf("%d,%d,", building.left, building.height);
+					output.append(building.left + "," + building.height + ",");
 					if (building.right < last) {
-						pQueue.add(new Building(building.right, -1*high, last));
+						pQueue.add(new Building(building.right, -1 * high, last));
 						high = building.height;
 						last = building.right;
-					}
-					else {
+					} else {
 						high = building.height;
 						last = building.right;
 					}
 				} else {
-					if (building.right > last) {
-						pQueue.add(new Building(last, -1 * building.height, building.right));			
-					}
+					if (building.right > last)
+						pQueue.add(new Building(last, -1 * building.height, building.right));
 				}
 			}
 		}
-		System.out.printf("%d,0", last);
+
+		output.append(last + ",0");
+		System.out.print(output.toString());
 	}
 
 	private static class Building implements Comparable<Building> {
