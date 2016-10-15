@@ -35,7 +35,7 @@ public class SkyLine {
 			building.height *= -1;
 
 			if (building.left > last) {
-				output.append(last + ",0" + building.left + "," + building.height + ",");
+				output.append(last + ",0," + building.left + "," + building.height + ",");
 				high = building.height;
 				last = building.right;
 			} else if (building.left == last) {
@@ -48,15 +48,11 @@ public class SkyLine {
 				}
 			} else {
 				if (building.height > high) {
-					output.append(building.left + "," + building.height + ",");
-					if (building.right < last) {
+					if (building.right < last)
 						pQueue.add(new Building(building.right, -1 * high, last));
-						high = building.height;
-						last = building.right;
-					} else {
-						high = building.height;
-						last = building.right;
-					}
+					output.append(building.left + "," + building.height + ",");
+					high = building.height;
+					last = building.right;
 				} else {
 					if (building.right > last)
 						pQueue.add(new Building(last, -1 * building.height, building.right));
@@ -81,7 +77,12 @@ public class SkyLine {
 
 		@Override
 		public int compareTo(Building compare) {
-			return 0;
+			if (this.left < compare.left)
+				return -1;
+			else if (this.left > compare.left)
+				return 1;
+			else
+				return 0;
 		}
 	}
 }
