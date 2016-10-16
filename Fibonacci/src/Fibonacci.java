@@ -12,6 +12,7 @@ public class Fibonacci {
 	private static final BigInteger ONE = new BigInteger("1");
 	private static final BigInteger TWO = new BigInteger("2");
 	private static final BigInteger TEN = new BigInteger("10");
+	private static final BigInteger[][] UNIT_MATRIX = new BigInteger[][] { { ONE, ZERO }, { ZERO, ONE } };
 	private static final String LINE = "--------------------------------------------------------\n";
 
 	public static void main(String... args) {
@@ -67,7 +68,7 @@ public class Fibonacci {
 	}
 
 	private static BigInteger squaring(BigInteger nth) {
-		BigInteger[][] matrix = new BigInteger[][] { { ONE, ZERO }, { ZERO, ONE } };
+		BigInteger[][] matrix = UNIT_MATRIX;
 		BigInteger[][] matrixFibonacci = new BigInteger[][] { { ONE, ONE }, { ONE, ZERO } };
 
 		while (!nth.equals(ZERO)) {
