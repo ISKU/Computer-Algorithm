@@ -5,8 +5,8 @@ import java.util.StringTokenizer;
 import java.util.PriorityQueue;
 
 /**
- * 2차원 평명 위에 직사각형의 빌딩의 위치와 높이가 주어졋을 때 
- * 감추어지는 선을 제외한 빌딩의 skyline을 계산하는 문제 
+ * 2차원 평명 위에 직사각형의 빌딩의 위치와 높이가 주어졌을 때 
+ * 감추어지는 선을 제외한 빌딩의 skyline을 계산하는 문제
  * 알고리즘 00반 201201356 김민호
  * @author Kim Min-Ho
  */
@@ -20,19 +20,19 @@ public class SkyLine {
 		int testCase = Integer.parseInt(parser.nextToken());
 		while (testCase-- > 0) {
 			parser = new StringTokenizer(input.readLine());
-			pQueue.add(new Building(Integer.parseInt(parser.nextToken(",")),
-									Integer.parseInt(parser.nextToken(",")) * -1, 
-									Integer.parseInt(parser.nextToken(","))));
+			pQueue.add(new Building(
+					Integer.parseInt(parser.nextToken(",")),
+					Integer.parseInt(parser.nextToken(",")),
+					Integer.parseInt(parser.nextToken(","))));
 		}
 
 		Building first = pQueue.poll();
-		int high = -1 * first.height;
+		int high = first.height;
 		int last = first.right;
-		output.append(first.left + "," + -1 * first.height + ",");
+		output.append(first.left + "," + first.height + ",");
 
 		while (!pQueue.isEmpty()) {
 			Building building = pQueue.poll();
-			building.height *= -1;
 
 			if (building.left > last) {
 				output.append(last + ",0," + building.left + "," + building.height + ",");
@@ -49,13 +49,13 @@ public class SkyLine {
 			} else {
 				if (building.height > high) {
 					if (building.right < last)
-						pQueue.add(new Building(building.right, -1 * high, last));
+						pQueue.add(new Building(building.right, high, last));
 					output.append(building.left + "," + building.height + ",");
 					high = building.height;
 					last = building.right;
 				} else {
 					if (building.right > last)
-						pQueue.add(new Building(last, -1 * building.height, building.right));
+						pQueue.add(new Building(last, building.height, building.right));
 				}
 			}
 		}
@@ -81,8 +81,20 @@ public class SkyLine {
 				return -1;
 			else if (this.left > compare.left)
 				return 1;
-			else
-				return 0;
+			else {
+				if (this.height > compare.height)
+					return -1;
+				else if (this.height < compare.height)
+					return 1;
+				else {
+					if (this.right < compare.right)
+						return -1;
+					else if (this.right > compare.right)
+						return 1;
+					else
+						return 0;
+				}
+			}
 		}
 	}
 }
