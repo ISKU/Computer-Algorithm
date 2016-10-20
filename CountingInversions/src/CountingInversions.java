@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class CountingInversions {
-	
-	private static int numberOfInversions = 0;
-	
+
+	private static long numberOfInversions = 0;
+
 	public static void main(String... args) throws IOException {
 		int[] data = readArrayAndInitData();
 		sortAndCount(data, new int[data.length], 0, data.length - 1); // counting inversions
-		System.out.println(numberOfInversions);
+		System.out.println("The Number Of Inversions: " + numberOfInversions);
 	}
 
 	private static void sortAndCount(int[] array, int[] tempArray, int leftSide, int rightSide) {
@@ -27,32 +27,30 @@ public class CountingInversions {
 		int indexOfMaxLeft = indexOfRight - 1;
 		int currentArraySize = indexOfMaxRight - indexOfLeft + 1;
 		int tempArrayIndex = indexOfLeft;
+		int indexOfInversion = indexOfRight;
 
 		while (indexOfLeft <= indexOfMaxLeft && indexOfRight <= indexOfMaxRight) {
-			if (array[indexOfLeft] < array[indexOfRight])
+			if (array[indexOfLeft] <= array[indexOfRight])
 				tempArray[tempArrayIndex++] = array[indexOfLeft++];
 			else {
+				numberOfInversions += indexOfInversion - indexOfLeft;
 				tempArray[tempArrayIndex++] = array[indexOfRight++];
-				numberOfInversions += indexOfMaxRight - tempArrayIndex;
 			}
 		}
 
-		if (indexOfLeft <= indexOfMaxLeft) {
-			while (indexOfLeft <= indexOfMaxLeft)
-				tempArray[tempArrayIndex++] = array[indexOfLeft++];
-		} else {
-			while (indexOfRight <= indexOfMaxRight)
-				tempArray[tempArrayIndex++] = array[indexOfRight++];
-		}
+		while (indexOfLeft <= indexOfMaxLeft)
+			tempArray[tempArrayIndex++] = array[indexOfLeft++];
+		while (indexOfRight <= indexOfMaxRight)
+			tempArray[tempArrayIndex++] = array[indexOfRight++];
 
 		for (int count = 0; count < currentArraySize; count++)
 			array[indexOfMaxRight] = tempArray[indexOfMaxRight--];
 	}
-	
+
 	private static int[] readArrayAndInitData() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader("data07_inversion.txt"));
 		StringTokenizer readData = new StringTokenizer(reader.readLine());
-		ArrayList<Integer> integerData = new ArrayList<Integer>(100000000);
+		ArrayList<Integer> integerData = new ArrayList<Integer>();
 		reader.close();
 
 		while (readData.hasMoreTokens())
