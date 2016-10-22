@@ -1,58 +1,63 @@
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.StringTokenizer;
+import java.util.ArrayList;
 
+/**
+ * Closest Pair Of Points Problem
+ * æÀ∞Ì∏Æ¡Ú 00π› 201201356 ±ËπŒ»£
+ * @author Kim Min-Ho
+ */
 public class ClosestPairOfPoints {
 	public static void main(String... args) throws IOException {
-		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer parser = new StringTokenizer(input.readLine());
-		Point points[] = new Point[Integer.parseInt(parser.nextToken())];
-
-		for (int index = 0; index < points.length; index++) {
-			parser = new StringTokenizer(input.readLine());
-			points[index] = new Point(Integer.parseInt(parser.nextToken()), Integer.parseInt(parser.nextToken()));
-		}
+		Point points[] = readArrayAndInitData();
 
 		quickSort(points, 0, points.length - 1, true);
-		System.out.print(closestPair(points, 0, points.length - 1));
+		double smallestDistance = closestPair(points, 0, points.length - 1);
+		System.out.printf("%.3f", (smallestDistance == Double.MAX_VALUE) ? 0 : smallestDistance);
 	}
 
-	private static int closestPair(Point[] array, int start, int end) {
-		int delta = Integer.MAX_VALUE;
+	private static double closestPair(Point[] array, int start, int end) {
+		double delta = Double.MAX_VALUE;
 		int length = end - start + 1;
-		int mid = (start + end) / 2;
 
 		if (length <= 2)
 			return distance(array[start], array[end]);
 
-		int alpha = closestPair(array, start, mid);
-		int beta = closestPair(array, mid + 1, end);
+		int mid = (start + end) / 2;
+		double alpha = closestPair(array, start, mid);
+		double beta = closestPair(array, mid + 1, end);
 		delta = Math.min(alpha, beta);
 
 		int lengthOfBand = 0;
 		Point[] band = new Point[length];
 		for (int index = start; index <= end; index++)
-			if (array[mid].x - delta <= array[index].x && array[mid].x + delta >= array[index].x)
+			if (array[index].x - array[mid].x <= delta)
 				band[lengthOfBand++] = array[index];
 
 		quickSort(band, 0, lengthOfBand - 1, false);
 
 		for (int i = 0; i < lengthOfBand; i++) {
-			for (int j = i + 1; j < lengthOfBand; j++) {
-				if (band[j].y <= band[i].y + delta)
-					delta = Math.min(delta, distance(band[i], band[j]));
-				else
+			for (int j = i + 1; j < i + 12 && j < lengthOfBand; j++) {
+				double tempDistance = distance(band[i], band[j]);
+
+				if (tempDistance < delta) {
+					delta = tempDistance;
 					break;
+				}
 			}
 		}
 
 		return delta;
 	}
 
-	private static int distance(Point first, Point second) {
-		int distance = (first.x - second.x) * (first.x - second.x) + (first.y - second.y) * (first.y - second.y);
-		return (distance == 0) ? Integer.MAX_VALUE : distance;
+	private static double distance(Point first, Point second) {
+		double distance = Math.sqrt(square(first.x - second.x) + square(first.y - second.y));
+		return (distance == 0) ? Double.MAX_VALUE : distance;
+	}
+
+	private static double square(double x) {
+		return x * x;
 	}
 
 	private static void quickSort(Point[] array, int low, int high, boolean coordinate) {
@@ -62,7 +67,7 @@ public class ClosestPairOfPoints {
 			return;
 
 		int middle = low + (high - low) / 2;
-		int pivot = coordinate ? array[middle].x : array[middle].y;
+		double pivot = coordinate ? array[middle].x : array[middle].y;
 		int i = low, j = high;
 
 		while (i <= j) {
@@ -87,12 +92,29 @@ public class ClosestPairOfPoints {
 	}
 
 	private static class Point {
-		public int x;
-		public int y;
+		public double x;
+		public double y;
 
-		public Point(int x, int y) {
+		public Point(double x, double y) {
 			this.x = x;
 			this.y = y;
 		}
+	}
+
+	private static Point[] readArrayAndInitData() throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader("data07_closest.txt"));
+		ArrayList<Point> fileData = new ArrayList<Point>();
+		String readData = null;
+
+		while ((readData = reader.readLine()) != null) {
+			String[] coordinate = readData.split(",");
+			fileData.add(new Point(Double.parseDouble(coordinate[0]), Double.parseDouble(coordinate[1])));
+		}
+		reader.close();
+
+		Point[] dataArray = new Point[fileData.size()];
+		for (int index = 0, size = fileData.size(); index < size; index++)
+			dataArray[index] = fileData.get(index);
+		return dataArray;
 	}
 }
