@@ -1,11 +1,11 @@
-import java.io.BufferedReader;
+ï»¿import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * Closest Pair Of Points Problem
- * ¾Ë°í¸®Áò 00¹Ý 201201356 ±è¹ÎÈ£
+ * ì•Œê³ ë¦¬ì¦˜ 00ë°˜ 201201356 ê¹€ë¯¼í˜¸
  * @author Kim Min-Ho
  */
 public class ClosestPairOfPoints {

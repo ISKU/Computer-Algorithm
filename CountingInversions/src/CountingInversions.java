@@ -1,9 +1,14 @@
-import java.io.BufferedReader;
+﻿import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
+/**
+ * Counting Inversions
+ * 알고리즘 00반 201201356 김민호
+ * @author Kim Min-Ho
+ */
 public class CountingInversions {
 
 	private static long numberOfInversions = 0;
