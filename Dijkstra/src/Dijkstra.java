@@ -1,8 +1,9 @@
-import java.util.Scanner;
+ï»¿import java.util.Scanner;
+import java.util.Stack;
 
 /**
- * Dijkstra Algorithm ¾Ë°í¸®Áò 00¹Ý 201201356 ±è¹ÎÈ£
- * 
+ * Dijkstra Algorithm 
+ * ì•Œê³ ë¦¬ì¦˜ 00ë°˜ 201201356 ê¹€ë¯¼í˜¸
  * @author Kim Min-Ho
  */
 public class Dijkstra {
@@ -42,24 +43,29 @@ public class Dijkstra {
 				}
 		}
 
-		for (int i = 0; i < numberOfVertices; i++)
-			System.out.print(previousVertex[i] + " ");
-		System.out.println();
-
-		for (int i = 0; i < numberOfVertices; i++) {
-			System.out.printf("%d: °Å¸® %d / %s", i, distance[i], previousVertex[i] == INFINITY ? "Ãâ¹ßÁ¡" : i);
-			printPath(previousVertex[i]);
-			System.out.println();
-		}
-
+		printPath();
 	}
 
-	private static void printPath(int prevVertex) {
-		if (prevVertex == INFINITY)
-			return;
+	private static void printPath() {
+		System.out.println("Shortest Path:");
 
-		System.out.print("<-" + prevVertex);
-		printPath(previousVertex[prevVertex]);
+		for (int vertex = 0; vertex < numberOfVertices; vertex++) {
+			Stack<Integer> path = new Stack<Integer>();
+			StringBuilder pullPath = new StringBuilder(String.valueOf(firstVertex));
+			int previous = vertex;
+
+			if (firstVertex == vertex)
+				continue;
+
+			while (previousVertex[previous] != INFINITY) {
+				path.push(previousVertex[previous]);
+				previous = previousVertex[previous];
+			}
+
+			while (!path.isEmpty())
+				pullPath.append("->" + path.pop());
+			System.out.printf("%s, cost: %d\n", pullPath.toString(), distance[vertex]);
+		}
 	}
 
 	private static void initializationDijkstra() {
@@ -82,6 +88,11 @@ public class Dijkstra {
 		numberOfVertices = input.nextInt();
 	}
 
+	private static void inputFirstVertex() {
+		System.out.println("\nEnter the source matrix: ");
+		firstVertex = input.nextInt() - 1;
+	}
+
 	private static void inputGraphMatrix() {
 		graph = new Edge[numberOfVertices];
 
@@ -95,10 +106,4 @@ public class Dijkstra {
 			}
 		}
 	}
-
-	private static void inputFirstVertex() {
-		System.out.println("\nEnter the source matrix: ");
-		firstVertex = input.nextInt();
-	}
-
 }

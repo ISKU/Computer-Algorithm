@@ -1,3 +1,8 @@
+/**
+ * Graph의 Edge의 정보를 담고 있는 클래스
+ * 알고리즘 00반 201201356 김민호
+ * @author Kim Min-Ho
+ */
 public class Edge {
 	public int index;
 	public int weight;
