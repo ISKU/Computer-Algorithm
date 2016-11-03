@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 /**
- * Dijkstra Algorithm 
- * æÀ∞Ì∏Æ¡Ú 00π› 201201356 ±ËπŒ»£
+ * Dijkstra Algorithm æÀ∞Ì∏Æ¡Ú 00π› 201201356 ±ËπŒ»£
+ * 
  * @author Kim Min-Ho
  */
 public class Dijkstra {
@@ -10,9 +10,11 @@ public class Dijkstra {
 	private static Scanner input = new Scanner(System.in);
 	private static final int INFINITY = Integer.MAX_VALUE;
 
+	private static PriorityQueue pQueue;
 	private static Edge[] graph;
 	private static int numberOfVertices;
 	private static int firstVertex;
+
 	private static int[] distance;
 	private static int[] previousVertex;
 	private static boolean[] visitedVertex;
@@ -21,23 +23,23 @@ public class Dijkstra {
 		inputVertices();
 		inputGraphMatrix();
 		inputFirstVertex();
-
-		exerciseDijkstra(firstVertex);
-
+		exerciseDijkstra();
 		input.close();
 	}
 
-	private static void exerciseDijkstra(int firstIndex) {
+	private static void exerciseDijkstra() {
 		initializationDijkstra();
 
-		while (firstIndex != -1) {
-			visitedVertex[firstIndex] = true;
-			for (Edge vertex = graph[firstIndex]; vertex != null; vertex = vertex.next)
-				if (!visitedVertex[vertex.vertex] && distance[firstIndex] + vertex.weight < distance[vertex.vertex]) {
-					distance[vertex.vertex] = distance[firstIndex] + vertex.weight;
-					previousVertex[vertex.vertex] = firstIndex;
+		while (!pQueue.isEmpty()) {
+			int currentVertex = pQueue.extract().index;
+			visitedVertex[currentVertex] = true;
+
+			for (Edge vertex = graph[currentVertex]; vertex != null; vertex = vertex.edge)
+				if (!visitedVertex[vertex.index] && distance[currentVertex] + vertex.weight < distance[vertex.index]) {
+					distance[vertex.index] = distance[currentVertex] + vertex.weight;
+					previousVertex[vertex.index] = currentVertex;
+					pQueue.insert(new Edge(vertex.index, distance[vertex.index]));
 				}
-			firstIndex = findSmallestDist(distance, visitedVertex);
 		}
 
 		for (int i = 0; i < numberOfVertices; i++)
@@ -52,19 +54,6 @@ public class Dijkstra {
 
 	}
 
-	private static int findSmallestDist(int[] dist, boolean[] mark) {
-		int min = INFINITY;
-		int distindex = -1;
-
-		for (int i = 0; i < numberOfVertices; i++)
-			if (!mark[i] && dist[i] < min) {
-				min = dist[i];
-				distindex = i;
-			}
-
-		return distindex;
-	}
-
 	private static void printPath(int prevVertex) {
 		if (prevVertex == INFINITY)
 			return;
@@ -77,13 +66,15 @@ public class Dijkstra {
 		distance = new int[numberOfVertices];
 		previousVertex = new int[numberOfVertices];
 		visitedVertex = new boolean[numberOfVertices];
+		pQueue = new PriorityQueue();
 
 		for (int i = 0; i < numberOfVertices; i++)
 			if (i != firstVertex)
 				distance[i] = INFINITY;
-
 		for (int i = 0; i < numberOfVertices; i++)
 			previousVertex[i] = INFINITY;
+
+		pQueue.insert(new Edge(firstVertex, 0));
 	}
 
 	private static void inputVertices() {
@@ -110,15 +101,4 @@ public class Dijkstra {
 		firstVertex = input.nextInt();
 	}
 
-	private static class Edge {
-		public int vertex;
-		public int weight;
-		public Edge next;
-
-		public Edge(int vertex, Edge next, int weight) {
-			this.vertex = vertex;
-			this.next = next;
-			this.weight = weight;
-		}
-	}
 }
