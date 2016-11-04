@@ -2,7 +2,7 @@
 import java.util.Stack;
 
 /**
- * Dijkstra Algorithm 
+ * Dijkstra Algorithm With PriorityQueue 
  * 알고리즘 00반 201201356 김민호
  * @author Kim Min-Ho
  */
@@ -11,95 +11,102 @@ public class Dijkstra {
 	private static Scanner input = new Scanner(System.in);
 	private static final int INFINITY = Integer.MAX_VALUE;
 
-	private static PriorityQueue pQueue;
+	private static PriorityQueue smallsetDistanceQueue;
 	private static Edge[] graph;
-	private static int numberOfVertices;
-	private static int firstVertex;
+	private static int vertices;
+	private static int sourceVertex;
 
 	private static int[] distance;
-	private static int[] previousVertex;
-	private static boolean[] visitedVertex;
+	private static int[] previous;
+	private static boolean[] visited;
 
 	public static void main(String[] args) {
 		inputVertices();
-		inputGraphMatrix();
-		inputFirstVertex();
+		inputGraph();
+		inputSourceVertex();
 		exerciseDijkstra();
 		input.close();
 	}
 
 	private static void exerciseDijkstra() {
-		initializationDijkstra();
+		int currentVertex;
 
-		while (!pQueue.isEmpty()) {
-			int currentVertex = pQueue.extract().index;
-			visitedVertex[currentVertex] = true;
+		initializeDijkstra();
+		while (!smallsetDistanceQueue.isEmpty()) {
+			currentVertex = smallsetDistanceQueue.extract().index;
+			visited[currentVertex] = true;
 
-			for (Edge vertex = graph[currentVertex]; vertex != null; vertex = vertex.edge)
-				if (!visitedVertex[vertex.index] && distance[currentVertex] + vertex.weight < distance[vertex.index]) {
+			for (Edge vertex = graph[currentVertex]; vertex != null; vertex = vertex.edge) {
+				if (!visited[vertex.index] && distance[currentVertex] + vertex.weight < distance[vertex.index]) {
 					distance[vertex.index] = distance[currentVertex] + vertex.weight;
-					previousVertex[vertex.index] = currentVertex;
-					pQueue.insert(new Edge(vertex.index, distance[vertex.index]));
+					previous[vertex.index] = currentVertex;
+					smallsetDistanceQueue.insert(new Edge(vertex.index, distance[vertex.index]));
 				}
+			}
 		}
 
 		printPath();
 	}
 
 	private static void printPath() {
-		System.out.println("Shortest Path:");
+		Stack<Integer> path;
+		StringBuilder fullPath;
+		int currentVertex;
 
-		for (int vertex = 0; vertex < numberOfVertices; vertex++) {
-			Stack<Integer> path = new Stack<Integer>();
-			StringBuilder pullPath = new StringBuilder(String.valueOf(firstVertex));
-			int previous = vertex;
-
-			if (firstVertex == vertex)
+		System.out.println("--------------------------- Shortest Full Path");
+		for (int vertex = 0; vertex < vertices; vertex++) {
+			if (sourceVertex == vertex)
 				continue;
 
-			while (previousVertex[previous] != INFINITY) {
-				path.push(previousVertex[previous]);
-				previous = previousVertex[previous];
+			path = new Stack<Integer>();
+			fullPath = new StringBuilder(String.valueOf(sourceVertex));
+			currentVertex = vertex;
+
+			while (previous[currentVertex] != INFINITY) {
+				path.push(previous[currentVertex]);
+				currentVertex = previous[currentVertex];
 			}
 
 			while (!path.isEmpty())
-				pullPath.append("->" + path.pop());
-			System.out.printf("%s, cost: %d\n", pullPath.toString(), distance[vertex]);
+				fullPath.append("->" + path.pop());
+			System.out.printf("%-17s *Cost: %d\n", fullPath.toString(), distance[vertex]);
 		}
+		System.out.println("----------------------------------------------");
 	}
 
-	private static void initializationDijkstra() {
-		distance = new int[numberOfVertices];
-		previousVertex = new int[numberOfVertices];
-		visitedVertex = new boolean[numberOfVertices];
-		pQueue = new PriorityQueue();
+	private static void initializeDijkstra() {
+		distance = new int[vertices];
+		previous = new int[vertices];
+		visited = new boolean[vertices];
+		smallsetDistanceQueue = new PriorityQueue();
 
-		for (int i = 0; i < numberOfVertices; i++)
-			if (i != firstVertex)
-				distance[i] = INFINITY;
-		for (int i = 0; i < numberOfVertices; i++)
-			previousVertex[i] = INFINITY;
+		for (int vertex = 0; vertex < vertices; vertex++)
+			distance[vertex] = (sourceVertex == vertex) ? 0 : INFINITY;
+		for (int vertex = 0; vertex < vertices; vertex++)
+			previous[vertex] = INFINITY;
 
-		pQueue.insert(new Edge(firstVertex, 0));
+		smallsetDistanceQueue.insert(new Edge(sourceVertex, 0));
 	}
 
 	private static void inputVertices() {
 		System.out.println("Enter the number of vertices: ");
-		numberOfVertices = input.nextInt();
+		vertices = input.nextInt();
 	}
 
-	private static void inputFirstVertex() {
+	private static void inputSourceVertex() {
 		System.out.println("\nEnter the source matrix: ");
-		firstVertex = input.nextInt() - 1;
+		sourceVertex = input.nextInt() - 1;
 	}
 
-	private static void inputGraphMatrix() {
-		graph = new Edge[numberOfVertices];
+	private static void inputGraph() {
+		int weight;
+		graph = new Edge[vertices];
 
 		System.out.println("Enter the cost matrix: ");
-		for (int firstVertex = 0; firstVertex < numberOfVertices; firstVertex++) {
-			for (int secondVertex = 0; secondVertex < numberOfVertices; secondVertex++) {
-				int weight = input.nextInt();
+		for (int firstVertex = 0; firstVertex < vertices; firstVertex++) {
+			for (int secondVertex = 0; secondVertex < vertices; secondVertex++) {
+				weight = input.nextInt();
+
 				if (weight == 0)
 					continue;
 				graph[firstVertex] = new Edge(secondVertex, graph[firstVertex], weight);
