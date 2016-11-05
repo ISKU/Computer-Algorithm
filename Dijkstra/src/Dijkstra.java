@@ -59,7 +59,7 @@ public class Dijkstra {
 				continue;
 
 			path = new Stack<Integer>();
-			fullPath = new StringBuilder(String.valueOf(sourceVertex));
+			fullPath = new StringBuilder();
 			currentVertex = vertex;
 
 			while (previous[currentVertex] != INFINITY) {
@@ -68,8 +68,8 @@ public class Dijkstra {
 			}
 
 			while (!path.isEmpty())
-				fullPath.append("->" + path.pop());
-			System.out.printf("%-17s *Cost: %d\n", fullPath.toString(), distance[vertex]);
+				fullPath.append(path.pop() + "->");
+			System.out.printf("%-17s *Cost: %d\n", fullPath.toString() + vertex, distance[vertex]);
 		}
 		System.out.println("----------------------------------------------");
 	}
