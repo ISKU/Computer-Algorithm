@@ -22,10 +22,7 @@ public class HuffmanCodeEncoding {
 	private static StringBuilder encodingData = new StringBuilder();
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader("data10.txt"));
-		data = reader.readLine();
-		reader.close();
-
+		input();
 		frequencyScanning();
 		buildHuffmanTree();
 		createHuffmanCode(huffmanTree, "");
@@ -70,6 +67,12 @@ public class HuffmanCodeEncoding {
 			encodingData.append(huffmanCode.get(data.charAt(index)));
 	}
 
+	private static void input() throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader("data10.txt"));
+		data = reader.readLine();
+		reader.close();
+	}
+	
 	private static void output() throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter("hw08_00_201201356_encoded.txt"));
 		writer.write(encodingData.toString());
