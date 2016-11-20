@@ -16,7 +16,6 @@ public class KnapsackProblem {
 
 	private static int bagSize;
 	private static int numberOfItems = 0;
-	private static int ix, jx;
 
 	public static void main(String[] args) throws IOException {
 		inputItem();
