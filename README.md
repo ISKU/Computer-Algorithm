@@ -1,20 +1,20 @@
-# ComputerAlgorithm
+# Computer Algorithm
 
 ### Contents
-1. Insertion sort
-2. Binary insertion sort
-3. Merge sort 
-4. 3-way Merge sort
+1. Insertion Sort
+2. Binary Insertion Sort
+3. Merge Sort 
+4. 3-Way Merge Sort
 5. Max Heap
-6. QuickSort
-7. QuickSort_with Random Pivot
-8. Calculate clock angle
-9. N's log floor function
-10. Fibonacci function (Recursion, Array, Recursive squaring)
+6. Quick Sort
+7. Quick Sort With Random Pivot
+8. Calculate Clock Angle
+9. N's Log Floor Function
+10. Fibonacci Function (Recursion, Array, Recursive Squaring)
 11. Skyline
-12. Counting inversions
-13. Closest pair
-14. Dijkstra algorithm using priority queue
-15. Minimum spanning tree using Prim's algorithm
-16. Huffman encoding, decoding
-17. Napsack problem Using Dynamic Programming
+12. Counting Inversions
+13. Closest Pair
+14. Dijkstra Algorithm Using Priority Queue
+15. Minimum Spanning Tree Using Prim's Algorithm
+16. Huffman Encoding, Decoding
+17. Napsack Problem Using Dynamic Programming
